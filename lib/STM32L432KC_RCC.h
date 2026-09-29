@@ -28,8 +28,8 @@
 #define SW_PLL    /* TODO: Part 3 */
 
 // AHB prescaler (RCC_CFGR HPRE): HCLK = SYSCLK / prescaler
-#define HPRE_DIV1  /* TODO: Part 2 */
-#define HPRE_DIV4  /* TODO: Part 2 */
+#define HPRE_DIV1  0b0000
+#define HPRE_DIV4  0b1001
 
 /**
   * @brief Reset and Clock Control

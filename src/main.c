@@ -22,7 +22,7 @@
 #define LED_PIN 3 // PB3: green user LED (LD3) on the Nucleo-L432KC
 
 // What you *believe* the CPU clock (HCLK) is, in Hz. Update it in every part.
-#define HCLK_HZ 16000000
+#define HCLK_HZ 4000000
 
 ///////////////////////////////////////////////////////////////////////////////
 // Provided: delay using SysTick, a 24-bit down-counter built into every Cortex-M
@@ -60,7 +60,7 @@ int main(void) {
   selectSysclk(SW_HSI16);
 
   // Part 2: keep Part 1, then divide SYSCLK by 4 on the way to the CPU
-  // setAHBPrescaler(HPRE_DIV4);
+  setAHBPrescaler(HPRE_DIV4);
 
   // Part 3: 80 MHz from the PLL. Comment out Parts 1 and 2 first.
   // setFlashLatency(/* TODO */);

@@ -21,8 +21,8 @@ void selectSysclk(uint32_t sw) {
 
 // Part 2
 void setAHBPrescaler(uint32_t hpre) {
-  // TODO: Write hpre into the HPRE field of RCC_CFGR, leaving the other bits alone
-
+  // HCLK = SYSCLK / (AHB prescaler)
+  RCC->CFGR = (RCC->CFGR & ~(0b1111 << 4)) | (hpre << 4);
 }
 
 // Part 3

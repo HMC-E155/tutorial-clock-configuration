@@ -11,8 +11,8 @@
 //
 //     LED blink rate (Hz) = (actual HCLK) / HCLK_HZ
 //
-// Work through the worksheet one part at a time. Before each flash, write down
-// what you expect the LED to do.
+// This file is the Part 3 solution (80 MHz from the PLL). The earlier parts are
+// left in, commented out, so you can step back through them.
 
 #include <stdint.h>
 #include "STM32L432KC_GPIO.h"
@@ -21,8 +21,8 @@
 
 #define LED_PIN 3 // PB3: green user LED (LD3) on the Nucleo-L432KC
 
-// What you *believe* the CPU clock (HCLK) is, in Hz. Update it in every part.
-#define HCLK_HZ 4000000
+// What we *believe* the CPU clock (HCLK) is, in Hz
+#define HCLK_HZ 80000000
 
 ///////////////////////////////////////////////////////////////////////////////
 // Provided: delay using SysTick, a 24-bit down-counter built into every Cortex-M
@@ -53,19 +53,22 @@ void delay_ms(uint32_t ms) {
 }
 
 int main(void) {
-  // Part 0: do nothing. What is SYSCLK at reset?
+  // Part 0: do nothing. At reset SYSCLK = MSI = 4 MHz. (HCLK_HZ = 4000000)
 
-  // Part 1: switch SYSCLK from MSI to HSI16
-  enableHSI16();
-  selectSysclk(SW_HSI16);
+  // Part 1: switch SYSCLK from MSI to HSI16. (HCLK_HZ = 16000000)
+  // enableHSI16();
+  // selectSysclk(SW_HSI16);
 
-  // Part 2: keep Part 1, then divide SYSCLK by 4 on the way to the CPU
-  setAHBPrescaler(HPRE_DIV4);
+  // Part 2: keep Part 1, then divide SYSCLK by 4 on the way to the CPU. (HCLK_HZ = 4000000)
+  // setAHBPrescaler(HPRE_DIV4);
 
-  // Part 3: 80 MHz from the PLL. Comment out Parts 1 and 2 first.
-  // setFlashLatency(/* TODO */);
-  // configurePLL(PLLSRC_MSI, /* M */, /* N */, /* R */);
-  // selectSysclk(SW_PLL);
+  // Part 3: 80 MHz from the PLL. (HCLK_HZ = 80000000)
+  // MSI (4 MHz) / M=1 = 4 MHz into the VCO (4-16 MHz ok)
+  // 4 MHz * N=40 = 160 MHz VCO (64-344 MHz ok)
+  // 160 MHz / R=2 = 80 MHz (<= 80 MHz ok)
+  setFlashLatency(4);             // 4 wait states for 64 < HCLK <= 80 MHz. Must come *before* speeding up.
+  configurePLL(PLLSRC_MSI, 1, 40, 2);
+  selectSysclk(SW_PLL);
 
   // Turn on clock to GPIOB and set LED_PIN as output
   RCC->AHB2ENR |= (1 << 1);

@@ -15,17 +15,14 @@
 // Base addresses
 #define RCC_BASE (0x40021000UL) // base address of RCC
 
-// Fill these in from RM0394 as you work through the worksheet.
-// Each one is the bit pattern that goes *in the register field*, not the divide ratio.
-
 // PLL input clock source (RCC_PLLCFGR PLLSRC)
-#define PLLSRC_MSI    /* TODO: Part 3 */
-#define PLLSRC_HSI16  /* TODO: Part 4 (only if you need it) */
+#define PLLSRC_MSI    0b01
+#define PLLSRC_HSI16  0b10
 
 // System clock switch (RCC_CFGR SW, read back through SWS)
 #define SW_MSI    0b00
 #define SW_HSI16  0b01
-#define SW_PLL    /* TODO: Part 3 */
+#define SW_PLL    0b11
 
 // AHB prescaler (RCC_CFGR HPRE): HCLK = SYSCLK / prescaler
 #define HPRE_DIV1  0b0000

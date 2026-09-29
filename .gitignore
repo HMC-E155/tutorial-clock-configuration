@@ -1,0 +1,6 @@
+.DS_Store
+
+# SEGGER Embedded Studio build output and per-user files
+**/Output/
+*.emSession
+*.jlink

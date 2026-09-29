@@ -23,8 +23,8 @@
 #define PLLSRC_HSI16  /* TODO: Part 4 (only if you need it) */
 
 // System clock switch (RCC_CFGR SW, read back through SWS)
-#define SW_MSI    /* TODO: Part 1 */
-#define SW_HSI16  /* TODO: Part 1 */
+#define SW_MSI    0b00
+#define SW_HSI16  0b01
 #define SW_PLL    /* TODO: Part 3 */
 
 // AHB prescaler (RCC_CFGR HPRE): HCLK = SYSCLK / prescaler

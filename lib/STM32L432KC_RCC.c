@@ -5,18 +5,18 @@
 
 // Part 1
 void enableHSI16(void) {
-  // TODO: Turn on the HSI16 oscillator
-
-  // TODO: Wait until the hardware reports that HSI16 is ready (stable)
-
+  RCC->CR |= (1 << 8);            // HSION: turn on the 16 MHz internal RC oscillator
+  while (!((RCC->CR >> 10) & 1)); // Wait for HSIRDY: oscillator is stable
 }
 
 // Part 1
 void selectSysclk(uint32_t sw) {
-  // TODO: Write sw into the SW field of RCC_CFGR, leaving the other bits alone
+  // One read-modify-write so SW never passes through an intermediate value.
+  // (Clearing first and then setting would briefly select MSI = 0b00.)
+  RCC->CFGR = (RCC->CFGR & ~(0b11 << 0)) | (sw << 0);
 
-  // TODO: Wait until SWS reports that the switch has actually happened
-
+  // SW is a request; SWS reports which source is actually driving SYSCLK
+  while (((RCC->CFGR >> 2) & 0b11) != sw);
 }
 
 // Part 2

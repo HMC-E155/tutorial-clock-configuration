@@ -22,7 +22,7 @@
 #define LED_PIN 3 // PB3: green user LED (LD3) on the Nucleo-L432KC
 
 // What you *believe* the CPU clock (HCLK) is, in Hz. Update it in every part.
-#define HCLK_HZ 4000000
+#define HCLK_HZ 16000000
 
 ///////////////////////////////////////////////////////////////////////////////
 // Provided: delay using SysTick, a 24-bit down-counter built into every Cortex-M
@@ -56,8 +56,8 @@ int main(void) {
   // Part 0: do nothing. What is SYSCLK at reset?
 
   // Part 1: switch SYSCLK from MSI to HSI16
-  // enableHSI16();
-  // selectSysclk(SW_HSI16);
+  enableHSI16();
+  selectSysclk(SW_HSI16);
 
   // Part 2: keep Part 1, then divide SYSCLK by 4 on the way to the CPU
   // setAHBPrescaler(HPRE_DIV4);
